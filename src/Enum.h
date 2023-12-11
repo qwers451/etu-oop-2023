@@ -29,7 +29,7 @@ enum class COMMAND
     NONE
 };
 
-static const char *cfg = "input.txt";
+static const char *cfg = "config.txt";
 
 namespace key_commands
 {

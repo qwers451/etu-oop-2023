@@ -4,8 +4,6 @@ project(program VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# list(APPEND CMAKE_CXX_FLAGS "-Wall -Werror -Wsign-compare")
-
 set(CMAKE_CXX_FLAGS_ASAN "-g -fsanitize=address,undefined -fno-sanitize-recover=all -O2"
     CACHE STRING "Compiler flags in asan build"
     FORCE)
@@ -20,7 +18,7 @@ message("ASAN build compiler flags: " ${CMAKE_CXX_FLAGS_ASAN})
 message("ShadRel build compiler flags: " ${CMAKE_CXX_FLAGS_SHADREL})
 file(GLOB_RECURSE SOURCES "*src/*.cpp")
 file(GLOB_RECURSE HEADERS "*src/*.h")
-file(COPY input.txt DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY config.txt DESTINATION ${CMAKE_BINARY_DIR})
 
 
 
