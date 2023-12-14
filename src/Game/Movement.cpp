@@ -5,7 +5,7 @@
 #include <mutex>
 #include <iostream>
 
-Movement::Movement(Player &player, Observer &MovementObs) : player(player), MovementObs(MovementObs)
+Movement::Movement(Player &player, Observer &MovementObs, MessageHandler& msg_handler) : player(player), MovementObs(MovementObs), msg_handler(msg_handler)
 {
 	IFieldGen *ev = new FieldGenerator(7, 13, MovementObs);
 	this->setField(ev->create_field(this->player));

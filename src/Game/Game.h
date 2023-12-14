@@ -6,11 +6,15 @@
 #include "Movement.h"
 #include "../Exceptions/ExitGame.h"
 #include "GameObserver.h"
+#include "../Logger/GameLogger.h"
+#include "../Logger/WinLogger.h"
+
 
 class Game
 {
 public:
-    Game(Movement &movement, ICommandReader &cr, Observer &gameObserver) : movement(movement), commandInput(cr), gameObserver(gameObserver) {}
+    Game(Movement &movement, ICommandReader &cr, Observer &gameObserver, MessageHandler& msg_handler) :
+     movement(movement), commandInput(cr), gameObserver(gameObserver), msg_handler(msg_handler) {}
 
     void startTheGame();
 
@@ -26,6 +30,7 @@ private:
     Movement &movement;
     ICommandReader &commandInput;
     Observer &gameObserver;
+    MessageHandler& msg_handler;
 };
 
 #endif

@@ -10,11 +10,13 @@
 #include "../Field/FieldGenerator/IFieldGen.h"
 #include "../Field/FieldGenerator/FieldGenerator.h"
 #include "GameObserver.h"
+#include "../Logger/MessageHandler.h"
+#include "../Logger/LossLogger.h"
 
 class Movement
 {
 public:
-	Movement(Player &player, Observer &MovementObs);
+	Movement(Player &player, Observer &MovementObs, MessageHandler& msg_handler);
 
 	void player_movement(MOVEMENT move);
 
@@ -45,6 +47,7 @@ private:
 	Player &player;
 	Field *field;
 	Observer &MovementObs;
+	MessageHandler& msg_handler;
 };
 
 #endif
