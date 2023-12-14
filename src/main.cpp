@@ -2,6 +2,8 @@
 #include "Input/KeyParser.h"
 #include "Exceptions/ExceptionHandler.h"
 #include "FrameLimiter.h"
+#include "Logger/MessageHandler.h"
+#include "LoggerOutput/LogOutputManager.h"
 #include <thread>
 #include <iostream>
 #include <locale.h>
@@ -14,7 +16,6 @@ int main()
 	std::cout << "введите s для открытия настроек управления\n";
 	std::cin >> option;
 	CommandConverter converter{};
-	GameObserver gameObserver{};
 	if (option == 's')
 	{
 		IChangeConfig *ch = new ChangeConfig;
@@ -22,11 +23,22 @@ int main()
 	}
 	if (ExceptionHandler(converter).checkForException())
 		return 1;
+
 	Player player;
-	GameObserver eventObserver{};
-	CommandReader cr{converter};
-	Movement controller(player, eventObserver);
-	Game game{controller, cr, gameObserver};
+
+	std::cout << "Press 1 to output logs into console.\nPress 2 to output logs into file.\nPress 3 to output logs into console and file.\n";
+	char log_option;
+	std::cin >> log_option;
+	
+	std::vector<Logger*> log_messages;
+	MessageHandler msg_handler(log_messages);
+	std::vector<std::string> msg_vector;
+
+	
+	GameObserver GameObs(msg_vector);
+	CommandReader cr{converter, msg_handler};
+	Movement controller(player, GameObs, msg_handler);
+	Game game{controller, cr, GameObs, msg_handler};
 	initscr();
 	start_color();
 	keypad(stdscr, TRUE);
@@ -46,5 +58,6 @@ int main()
 	GameThread.join();
 	FieldDisplayThread.join();
 	endwin();
+	LogOutputManager(msg_handler).output(log_option);
 	return 0;
 }

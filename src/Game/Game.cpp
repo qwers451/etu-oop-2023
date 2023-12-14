@@ -39,6 +39,12 @@ void Game::GameObsUpdate(std::string obsMassege)
 
 void Game::startTheGame()
 {
+	std::pair<int, int> field_size = std::make_pair(
+		this->movement.getField()->get_height(), 
+		this->movement.getField()->get_width());
+	msg_handler.msg_update(new GameLogger(field_size,
+		this->movement.getField()->get_start()));
+
 	this->setPlayerClass();
 	while (true)
 	{
